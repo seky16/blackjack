@@ -16,3 +16,12 @@ C:\Users\Seky\Desktop\blackjack2\blackjack2\obj\Debug\blackjack2.Properties.Reso
 C:\Users\Seky\Desktop\blackjack2\blackjack2\obj\Debug\blackjack2.csproj.GenerateResource.Cache
 C:\Users\Seky\Desktop\blackjack2\blackjack2\obj\Debug\blackjack2.exe
 C:\Users\Seky\Desktop\blackjack2\blackjack2\obj\Debug\blackjack2.pdb
+D:\Dokumenty\GitHub\blackjack\blackjack2\bin\Debug\blackjack2.exe.config
+D:\Dokumenty\GitHub\blackjack\blackjack2\bin\Debug\blackjack2.exe
+D:\Dokumenty\GitHub\blackjack\blackjack2\bin\Debug\blackjack2.pdb
+D:\Dokumenty\GitHub\blackjack\blackjack2\obj\Debug\blackjack2.csprojResolveAssemblyReference.cache
+D:\Dokumenty\GitHub\blackjack\blackjack2\obj\Debug\blackjack2.Form1.resources
+D:\Dokumenty\GitHub\blackjack\blackjack2\obj\Debug\blackjack2.Properties.Resources.resources
+D:\Dokumenty\GitHub\blackjack\blackjack2\obj\Debug\blackjack2.csproj.GenerateResource.Cache
+D:\Dokumenty\GitHub\blackjack\blackjack2\obj\Debug\blackjack2.exe
+D:\Dokumenty\GitHub\blackjack\blackjack2\obj\Debug\blackjack2.pdb

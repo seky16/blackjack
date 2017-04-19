@@ -6,27 +6,33 @@ using System.Threading.Tasks;
 
 namespace blackjack2
 {
+    // http://stackoverflow.com/a/37804448
     public class RandomNumber
     {
-        private static readonly System.Security.Cryptography.RNGCryptoServiceProvider _seed = new System.Security.Cryptography.RNGCryptoServiceProvider();
+        private static readonly System.Security.Cryptography.RNGCryptoServiceProvider rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
 
-        public static int NumberBetween(int minimum, int maximum)
+        public static int Between(int min, int max)
         {
+            // definuje array bytů
             byte[] randomNumber = new byte[1];
 
-            _seed.GetBytes(randomNumber);
+            // "Fills an array of bytes with a cryptographically strong sequence of random values"
+            // https://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider(v=vs.110).aspx
+            rng.GetBytes(randomNumber);
 
-            double asciiValue = Convert.ToDouble(randomNumber[0]);
+            // převede do typu double
+            double rng_d = Convert.ToDouble(randomNumber[0]);
 
-            double multiplier = Math.Max(0, (asciiValue / 255d) - 0.00000000001d);
+            // vydělí 255 a tedy máme číslo mezi 0 a 1
+            double multiplier = Math.Abs(rng_d / 255d);
 
-            // adding one to the range, to allow for rounding
-            int range = maximum - minimum + 1;
+            // ze zadaných max a min spočítá rozsah, připočítá 1 pro zaokrouhlování
+            int range = max - min + 1;
 
-            double randomValue = Math.Floor(multiplier * range); // rounds to ensure within range
+            // zaokrouhlí dolů
+            double randomValue = Math.Floor(multiplier * range);
 
-            return (int)(minimum + randomValue); // adds minvalue to randomvalue(0 to max)
+            return (int)(min + randomValue); 
         }
-
     }
 }

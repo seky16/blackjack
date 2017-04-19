@@ -22,36 +22,36 @@ namespace blackjack2
         public void LoadDeck()
         {
             Cards.Clear();
-            int cardnum = 1;
 
-            for (int i = 1; i < 5; i++) // 4 barvy
+            int i = 1;
+            for (int s = 1; s < 5; s++) // 4 barvy
             {
-                for (int j = 1; j < 14; j++) // 13 karet pro každou barvu
+                for (int v = 1; v < 14; v++) // 13 karet pro každou barvu
                 {
                     // vytvoří novou kartu
                     Card currentcard = new Card();
 
                     // přiřadí index karty
-                    currentcard.Card_number = cardnum;
+                    currentcard.Card_index = i;
 
                     // přiřadí barvu
-                    if (i == 1)
+                    if (s == 1)
                         currentcard.Suit = "spades";
-                    if (i == 2)
+                    if (s == 2)
                         currentcard.Suit = "clubs";
-                    if (i == 3)
+                    if (s == 3)
                         currentcard.Suit = "hearts";
-                    if (i == 4)
+                    if (s == 4)
                         currentcard.Suit = "diamonds";
 
                     // přiřadí hodnotu
-                    currentcard.Value = j;
+                    currentcard.Value = v;
 
                     // přidá do balíčku
                     Cards.Add(currentcard); 
                                            
                     // další karta
-                    cardnum++;
+                    i++;
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace blackjack2
         {
             foreach (Card a_card in Cards)
             {
-                if (a_card.Card_number == cardnum)
+                if (a_card.Card_index == cardnum)
                 {
                     return a_card;
                 }

@@ -8,33 +8,32 @@ namespace blackjack2
 {
     public class Hand
     {
-        public List<Card> Cards { set; get; }
-        public int Number_of_cards { set; get; }
+        public List<Card> CardsInHand { set; get; }
+        public int NumberOfCards { set; get; }
         public int Score { set; get; }
         public string Result { set; get; }
 
-        // kontruktor vytvoří seznam a vloží do něj "prázdné" karty
+        // konstruktor vytvoří seznam a vloží do něj "prázdné" karty
         public Hand(int numcards)
         {
-            Number_of_cards = numcards; // počet karet v ruce
+            NumberOfCards = numcards; // počet karet v ruce
 
             // vytvoří seznam karet
-            Cards = new List<Card>(); 
+            CardsInHand = new List<Card>(); 
             Card emptycard = new Card(); // prázdná karta
 
             for (int i = 0; i < numcards; i++)
             {
                 // přidá příslušný počet prázdných karet do seznamu
-                Cards.Add(emptycard);
+                CardsInHand.Add(emptycard);
             }
         }
    
         
         // vybere náhodnou kartu z balíčku a vloží ji místo jedné z prázdných karet 
-        public void Add_card(Deck currentdeck)
+        public void AddCard(Deck currentdeck)
         {
             bool added = false;
-            int pickedcard = 0;
 
             // pokud je balíček skoro prázdný, vytvoří nový
             if (currentdeck.Cards.Count <= 2)
@@ -43,13 +42,13 @@ namespace blackjack2
             }
 
             // vytvoří náhodné číslo, vybere tuto kartu z balíčku
-            pickedcard = RandomNumber.NumberBetween(1, currentdeck.Cards.Count - 1);
+            int pickedcard = RandomNumber.Between(1, currentdeck.Cards.Count - 1) - 1;
             Card currentcard = currentdeck.Cards.ElementAt(pickedcard);
             Card tobereplaced = new Card();
 
             while (!added)
             {
-                foreach (Card temp in Cards)
+                foreach (Card temp in CardsInHand)
                 {
                     // najde prázdnou kartu
                     if (temp.Suit == "")
@@ -57,8 +56,8 @@ namespace blackjack2
                 }
                 if (tobereplaced != null)
                 {
-                    Cards.Remove(tobereplaced); // odebere nalezenou prázdnou kartu
-                    Cards.Add(currentcard); // přidá vytáhnutou náh. kartu z balíčku do ruky
+                    CardsInHand.Remove(tobereplaced); // odebere nalezenou prázdnou kartu
+                    CardsInHand.Add(currentcard); // přidá vytáhnutou náh. kartu z balíčku do ruky
                     added = true;
                     currentdeck.Cards.Remove(currentcard); // odebere tuto kartu z balíčku
                 }
@@ -66,21 +65,21 @@ namespace blackjack2
         }
         
         // rozdá karty - zavolá add_card tolikrát, kolik je potřeba karet v ruce
-        public void Deal_cards(Deck currentdeck, int numcards)
+        public void DealCards(Deck currentdeck, int numcards)
         {
-            numcards = Cards.Count;
+            numcards = CardsInHand.Count;
             for (int i = 0; i < numcards; i++)
             {
-                Add_card(currentdeck);
+                AddCard(currentdeck);
             }
         }
 
         // vyhodnotí hodnotu karet v ruce
-        public void Evaluate_hand()
+        public void EvaluateHand()
         {
             Score = 0;
 
-            foreach (Card temp in Cards)
+            foreach (Card temp in CardsInHand)
             {
                 if (temp.Value < 10) // pro karty 1-9 má karta přísl. hodnotu
                     Score = Score + temp.Value;
@@ -89,7 +88,7 @@ namespace blackjack2
             }
 
             // úprava pro esa
-            foreach (Card temp in Cards)
+            foreach (Card temp in CardsInHand)
             {
                 if (temp.Value == 1 && Score + 10 <= 21)    // pokud eso s hodnotou 11 není více než 21
                     Score = Score + 10;                     // přidá k hodnotě ruky 10, aby eso bylo 11

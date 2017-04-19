@@ -10,15 +10,15 @@ namespace blackjack2
     {
         public string Suit { set; get; }   
         public int Value { set; get; }
-        public int Card_number { set; get; }
+        public int Card_index { set; get; }
 
   
-            // konstruktor generuje prázdnou kartu, té později přiřadíme hodnotu
+        // konstruktor generuje prázdnou kartu, té později přiřadíme hodnotu
         public Card()
         {
             Value = -1;
             Suit = "";
-            Card_number = -1;
+            Card_index = -1;
         }
     }
 }

@@ -12,7 +12,6 @@ namespace blackjack
 {
     public partial class Form1 : Form
     {
-        //public Deck CurrentDeck { get; set; }
         private Deck CurrentDeck;
         private Player PlayerHand;
         private Dealer DealerHand;
@@ -24,6 +23,7 @@ namespace blackjack
         public Form1()
         {
             InitializeComponent();
+            this.Icon = (Icon)Properties.Resources.ResourceManager.GetObject("blackjack");
 
             // při inicializaci zobrazí pouze tlačítko "Rozdat", vytvoří balíček a skryje karty
             ShowButton(1);
@@ -65,14 +65,14 @@ namespace blackjack
         //skryje karty
         public void HideCards()
         {
-            foreach (var pb in this.Controls.OfType<PictureBox>()) pb.Visible = false;
+            foreach (var pb in this.Controls.OfType<PictureBox>())
+                pb.Visible = false;
         }
 
         // zobrazí hráčovy karty
         public void DisplayHand(Hand hand)
         {
-            int count = 0;
-            string currentcard_picture = "";
+            string currentcard_picture = null;
             List<PictureBox> HandPB = new List<PictureBox>();
 
             if (hand == PlayerHand)
@@ -105,7 +105,7 @@ namespace blackjack
                 HandPB.Add(pictureBox23);
                 HandPB.Add(pictureBox24);
             };
-
+            int count = 0;
             if (hand.CardsInHand != null && hand != null)
                 // každé kartě určí příslušný název souboru podle její hodnoty a barvy
                 foreach (Card currentcard in hand.CardsInHand)
@@ -128,10 +128,10 @@ namespace blackjack
                     {
                         if (count == HandPB.IndexOf(pb))
                         {
-                            pb.Visible = true;                                                                      // zviditelní pictureBox
-                            pb.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject(currentcard_picture); // přiřadí pictureBoxu příslušný soubor
-                            pb.BringToFront();                                                                      // pictureBox do popředí
-                            pb.SizeMode = PictureBoxSizeMode.StretchImage;                                          // přizpůsobí obrázek velikosti pictureBoxu
+                            pb.Visible = true;                                                                      // zviditelní PictureBox
+                            pb.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject(currentcard_picture); // přiřadí PictureBoxu příslušný soubor
+                            pb.BringToFront();                                                                      // PictureBox do popředí
+                            pb.SizeMode = PictureBoxSizeMode.StretchImage;                                          // přizpůsobí obrázek velikosti PictureBoxu
                         }
                     }
                     count++;
@@ -141,23 +141,23 @@ namespace blackjack
         // tlačítko "ROZDAT"
         private void Button1_Click(object sender, EventArgs e)
         {
-            //CurrentDeck = new Deck(); // vytvoří nový balíček
-            PlayerHand = new Player(2);
-            DealerHand = new Dealer(1);
-
-            PlayerHand.Deal(CurrentDeck, 2); // rozdá hráči dvě karty
-            DealerHand.Deal(CurrentDeck, 1); // rozdá krupiérovi jednu kartu
-
-            // zobrazí tlačítka a skryje karty (budou zobrazeny později)
+            // zobrazí tlačítka a skryje všechny karty
             ShowButton();
             HideCards();
 
-            DisplayHand(PlayerHand);                                       // zobrazí hráčovy karty
-            DisplayHand(DealerHand);                                 // zobrazí krupiérovy karty
-            PlayerHand.Evaluate();                                     // vyhodnotí hráčovy karty
-            richTextBox1.Text = PlayerHand.Result + Environment.NewLine;   // zobrazí hodnotu hráč. karet v richTextBoxu
+            // vytvoří handy hráče a krupiéra
+            PlayerHand = new Player(2);
+            DealerHand = new Dealer(1);
 
-            if (PlayerHand.Score == 21)        // pokud má hráč ihned po rozdání 21 (blackjack), ukončí kolo
+            PlayerHand.Deal(CurrentDeck, 2);                                // rozdá hráči dvě karty
+            DealerHand.Deal(CurrentDeck, 1);                                // rozdá krupiérovi jednu kartu
+
+            DisplayHand(PlayerHand);                                        // zobrazí hráčovy karty
+            DisplayHand(DealerHand);                                        // zobrazí krupiérovy karty
+            PlayerHand.Evaluate();                                          // vyhodnotí hráčovy karty
+            richTextBox1.Text = PlayerHand.Result + Environment.NewLine;    // zobrazí hodnotu hráč. karet v richTextBoxu
+
+            if (PlayerHand.Score == 21) // pokud má hráč ihned po rozdání 21 (blackjack), ukončí kolo
             {
                 EndGame(PlayerHand, DealerHand);
             }
@@ -166,12 +166,12 @@ namespace blackjack
         // tlačítko "DALŠÍ KARTU"
         private void Button2_Click(object sender, EventArgs e)
         {
-            PlayerHand.AddCard(CurrentDeck);                               // přidá kartu do ruky
-            DisplayHand(PlayerHand);                                       // zobrazí karty v ruce
-            PlayerHand.Evaluate();                                     // vyhodnotí hráčovy karty
-            richTextBox1.Text = PlayerHand.Result + Environment.NewLine;   // zobrazí hodnotu hráč. karet v richTextBoxu
+            PlayerHand.AddCard(CurrentDeck);                                // přidá kartu do ruky
+            DisplayHand(PlayerHand);                                        // zobrazí karty v ruce
+            PlayerHand.Evaluate();                                          // vyhodnotí hráčovy karty
+            richTextBox1.Text = PlayerHand.Result + Environment.NewLine;    // zobrazí hodnotu hráč. karet v richTextBoxu
 
-            if (PlayerHand.Score >= 21) // pokud je hráč přes 21, ukončí kolo
+            if (PlayerHand.Score >= 21) // pokud je hráč přes 21 nebo má 21 (blackjack), ukončí kolo
             {
                 EndGame(PlayerHand, DealerHand);
             }
@@ -205,9 +205,9 @@ namespace blackjack
             // hraje krupiér, bere karty dokud nemá 17 a více
             else while (DealerHand.Score < 17)
             {
-                DealerHand.AddCard(CurrentDeck);  // přidá kartu do ruky
-                DisplayHand(DealerHand);   // zobrazí karty v ruce
-                DealerHand.Evaluate();        // vyhodnotí krupiérovy karty
+                DealerHand.AddCard(CurrentDeck);    // přidá kartu do ruky
+                DisplayHand(DealerHand);            // zobrazí karty v ruce
+                DealerHand.Evaluate();              // vyhodnotí krupiérovy karty
             }
             // pokud má krupiér 21 (blackjack), zobrazí hlášku o prohře a přičte 1 k počtu proher
             if (DealerHand.Score == 21)
@@ -234,7 +234,7 @@ namespace blackjack
                 Win++;
             }
             // pokud má hráč méně než krupiér, zobrazí hlášku o prohře a přičte 1 k počtu proher
-            else if ((PlayerHand.Score < DealerHand.Score)/* && (PlayerHand.Score <= 21) && (DealerHand.Score <= 21)*/)
+            else if (PlayerHand.Score < DealerHand.Score)
             {
                 richTextBox1.Text += Environment.NewLine + "Krupiér má " + DealerHand.Score + ", prohrál jsi." + Environment.NewLine;
                 richTextBox1.Find("prohrál");
@@ -242,7 +242,7 @@ namespace blackjack
                 Loss++;
             }
             // pokud mají hráč i krupiér stejně, zobrazí hlášku o remíze a přičte 1 k počtu remíz
-            else if ((PlayerHand.Score == DealerHand.Score)/* && (PlayerHand.Score <= 21) && (DealerHand.Score <= 21)*/)
+            else if (PlayerHand.Score == DealerHand.Score)
             {
                 richTextBox1.Text += Environment.NewLine + "Krupiér má " + DealerHand.Score + ", remíza." + Environment.NewLine;
                 richTextBox1.Find("remíza");

@@ -262,11 +262,11 @@ namespace blackjack
         {
             MessageBox.Show(
                 "Pravidla hry blackjack (upraveno):" + Environment.NewLine + Environment.NewLine +
-                "Hráč na začátku hry obdrží dvě karty a pak mu krupiér nabízí další karty, krupiér má pouze jednu kartu. Hráč se po každé rozhoduje, zda bude chtít další, nebo ne. Základní princip hry je, že hráč chce mít hodnotu karet blíže 21 než krupiér, ale přitom 21 nepřekročit. Vyhrává ten, kdo má po ukončení hry v ruce nejvyšší součet, aniž by překročil 21. Hráč, který má v ruce součet karet větší než 21, je tzv. „přes“." + Environment.NewLine +
+                "Hráč na začátku hry obdrží dvě karty a pak mu krupiér nabízí další karty, krupiér má pouze jednu kartu. Hráč se na začátku a po každé další kartě rozhoduje, zda bude chtít další kartu, nebo ne. Základní princip hry je, že hráč chce mít hodnotu karet blíže 21 než krupiér, ale přitom 21 nepřekročit. Vyhrává ten, kdo má po ukončení hry v ruce nejvyšší součet, aniž by překročil 21. Hráč, který má v ruce součet karet větší než 21, je tzv. „přes“." + Environment.NewLine +
                 "Karty od 2 do 10 mají při počítání stejnou hodnotu, jaká je uvedena na kartě. Karty J, Q, K (spodek, královna a král) mají hodnotu 10. Eso (A) se počítá dle situace za 1 nebo za 11. Barvy karet nemají žádný význam." + Environment.NewLine +
                 "Pokud je hráč „přes“, vždy prohrává, a to i tehdy, pokud je „přes“ i krupiér. Pokud mají hráč i krupiér stejný počet bodů, končí hra nerozhodně a nikdo nevyhrává. Součet 21 je vždy označen jako BLACKJACK a pokud jej dosáhne hráč, automaticky vyhrává." + Environment.NewLine +
-                "Krupiér začíná hrát až hráč ukončí kolo (tlačítko SKONČIT). Na rozdíl od hráče je při volbě dalšího postupu výrazně omezen. Pokud je jeho součet menší než 17, musí vždy vzít další kartu, pokud je 17 a výše, nesmí brát další kartu, musí zůstat stát a ukončit tak hru." + Environment.NewLine +
-                "Není možné hrát DOUBLE, SPLIT nebo POJIŠTĚNÍ. Při každém rozdání jsou karty znovu zamíchány, hraje se s jedním balíčkem.");
+                "Krupiér začíná hrát až hráč ukončí kolo (tlačítko SKONČIT). Narozdíl od hráče je při volbě dalšího postupu výrazně omezen. Pokud je součet jeho karet menší než 17, musí vždy vzít další kartu. Pokud má 17 a víc, nesmí brát další kartu, musí zůstat stát a ukončit tak hru." + Environment.NewLine +
+                "Není možné hrát DOUBLE, SPLIT nebo POJIŠTĚNÍ. Hraje se s jedním balíčkem, ten je vždy po vypotřebování zamíchán.");
         }
 
         // resetuje skóre

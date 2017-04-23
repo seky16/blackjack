@@ -34,8 +34,8 @@ namespace blackjack
         {
             bool added = false;
 
-            // pokud je balíček skoro prázdný, vytvoří nový
-            if (currentdeck.Cards.Count <= 2)
+            // pokud je balíček prázdný, vytvoří nový
+            if (currentdeck.Cards.Count <= 0)
             {
                 currentdeck.LoadDeck();
             }

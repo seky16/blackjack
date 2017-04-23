@@ -1,0 +1,9 @@
+D:\Dokumenty\GitHub\blackjack\blackjack\bin\Release\blackjack.exe.config
+D:\Dokumenty\GitHub\blackjack\blackjack\bin\Release\blackjack.exe
+D:\Dokumenty\GitHub\blackjack\blackjack\bin\Release\blackjack.pdb
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Release\blackjack.csprojResolveAssemblyReference.cache
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Release\blackjack.Form1.resources
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Release\blackjack.Properties.Resources.resources
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Release\blackjack.csproj.GenerateResource.Cache
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Release\blackjack.exe
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Release\blackjack.pdb

@@ -1,9 +1,9 @@
 D:\Dokumenty\GitHub\blackjack\blackjack\bin\Debug\blackjack.exe.config
 D:\Dokumenty\GitHub\blackjack\blackjack\bin\Debug\blackjack.exe
 D:\Dokumenty\GitHub\blackjack\blackjack\bin\Debug\blackjack.pdb
-D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.csprojResolveAssemblyReference.cache
 D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.Form1.resources
 D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.Properties.Resources.resources
 D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.csproj.GenerateResource.Cache
 D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.exe
 D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.pdb
+D:\Dokumenty\GitHub\blackjack\blackjack\obj\Debug\blackjack.csprojResolveAssemblyReference.cache

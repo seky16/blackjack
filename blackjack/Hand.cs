@@ -64,7 +64,7 @@ namespace blackjack
         }
 
         // rozdá karty - zavolá add_card tolikrát, kolik je potřeba karet v ruce
-        public void DealCards(Deck currentdeck, int numcards)
+        public void Deal(Deck currentdeck, int numcards)
         {
             numcards = CardsInHand.Count;
             for (int i = 0; i < numcards; i++)
@@ -74,7 +74,7 @@ namespace blackjack
         }
 
         // vyhodnotí hodnotu karet v ruce
-        public void EvaluateHand()
+        public void Evaluate()
         {
             Score = 0;
 
@@ -96,7 +96,7 @@ namespace blackjack
             // zobrazení hodnoty ruky v richTextBoxu pomocí stringu result
             if (Score > 21)
             {
-                Result = "Jsi přes, prohrál jsi.";
+                Result = null;
             }
             else
             {

@@ -8,10 +8,8 @@ namespace blackjack
 {
     public class Deck
     {
-        // balíček je seznam karet
         public List<Card> Cards { set; get; }
 
-        // vytvoří balíček
         public Deck()
         {
             Cards = new List<Card>();
@@ -32,7 +30,7 @@ namespace blackjack
                     Card currentcard = new Card();
 
                     // přiřadí index karty
-                    currentcard.Card_index = i;
+                    currentcard.CardIndex = i;
 
                     // přiřadí barvu
                     if (s == 1)
@@ -59,11 +57,11 @@ namespace blackjack
         // vyhledání karty podle indexu karty
         public Card FindCard(int cardnum)
         {
-            foreach (Card a_card in Cards)
+            foreach (Card card in Cards)
             {
-                if (a_card.Card_index == cardnum)
+                if (card.CardIndex == cardnum)
                 {
-                    return a_card;
+                    return card;
                 }
             }
             return null;

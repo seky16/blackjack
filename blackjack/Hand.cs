@@ -12,6 +12,7 @@ namespace blackjack
         public int NumberOfCards { set; get; }
         public int Score { set; get; }
         public string Result { set; get; }
+        public static Form1 form;
 
         // konstruktor vytvoří seznam a vloží do něj "prázdné" karty
         public Hand(int numcards)
@@ -29,20 +30,55 @@ namespace blackjack
             }
         }
 
-        // vybere náhodnou kartu z balíčku a vloží ji místo jedné z prázdných karet
-        public void AddCard(Deck currentdeck)
+        private bool CheckDeck(Deck currentdeck)
+        {
+            while (true)
+            {
+                if (currentdeck.Cards.Count <= 0)
+                {
+                    if (form.Deck1.Cards.Count <= 0 && form.Deck2.Cards.Count <= 0 && form.Deck3.Cards.Count <= 0)
+                    {
+                        System.Windows.Forms.MessageBox.Show("\"Míchám\"", "Krupiér");
+                        form.Deck1 = new Deck(1);
+                        form.Deck2 = new Deck(2);
+                        form.Deck3 = new Deck(3);
+                        form.CurrentDeck = form.Deck1;
+                        return true;
+                    }
+                    form.SwitchDecks();
+                    currentdeck = form.CurrentDeck;
+                    continue;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+            // vybere náhodnou kartu z balíčku a vloží ji místo jedné z prázdných karet
+            public void AddCard(Deck currentdeck)
         {
             bool added = false;
 
-            // pokud je balíček prázdný, vytvoří nový
-            if (currentdeck.Cards.Count <= 0)
-            {
-                currentdeck.LoadDeck();
-            }
+            // vymění balíčky
+            form.SwitchDecks();
 
             // vytvoří náhodné číslo, vybere tuto kartu z balíčku
-            int pickedcard = RandomNumber.Between(1, currentdeck.Cards.Count - 1) - 1;
-            Card currentcard = currentdeck.Cards.ElementAt(pickedcard);
+            int pickedcard = RandomNumber.Between(0, currentdeck.Cards.Count-1);
+
+            Card currentcard = new Card();
+            try
+            {
+                currentcard = currentdeck.Cards.ElementAt(pickedcard);
+            }
+            catch
+            {
+                while (!CheckDeck(currentdeck)) { form.SwitchDecks(); };
+                currentdeck = form.CurrentDeck;
+                pickedcard = RandomNumber.Between(0, currentdeck.Cards.Count - 1);
+                currentcard = currentdeck.Cards.ElementAt(pickedcard);
+            }
             Card tobereplaced = new Card();
 
             while (!added)

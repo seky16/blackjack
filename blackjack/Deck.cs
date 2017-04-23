@@ -9,9 +9,17 @@ namespace blackjack
     public class Deck
     {
         public List<Card> Cards { set; get; }
+        public int Id { set; get; }
 
         public Deck()
         {
+            Cards = new List<Card>();
+            LoadDeck();
+        }
+
+        public Deck(int id)
+        {
+            Id = id;
             Cards = new List<Card>();
             LoadDeck();
         }

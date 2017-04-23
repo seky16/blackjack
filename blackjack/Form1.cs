@@ -12,7 +12,11 @@ namespace blackjack
 {
     public partial class Form1 : Form
     {
-        private Deck CurrentDeck;
+        public Deck CurrentDeck;
+        public Deck Deck1;
+        public Deck Deck2;
+        public Deck Deck3;
+
         private Player PlayerHand;
         private Dealer DealerHand;
 
@@ -24,16 +28,48 @@ namespace blackjack
         {
             InitializeComponent();
             this.Icon = (Icon)Properties.Resources.ResourceManager.GetObject("blackjack");
+            Hand.form = this;
 
-            // při inicializaci zobrazí pouze tlačítko "Rozdat", vytvoří balíček a skryje karty
+            // při inicializaci zobrazí pouze tlačítko "Rozdat" a skryje karty
             ShowButton(1);
             HideCards();
-            CurrentDeck = new Deck();
+
+            // vytvoří tři balíčky
+            Deck1 = new Deck(1);
+            Deck2 = new Deck(2);
+            Deck3 = new Deck(3);
+            CurrentDeck = Deck1;
 
             // zobrazení skóre
             UpdateScore(0, 0, 0);
         }
 
+        // při zavolání náhodně vybere jeden ze tří balíčků
+        public void SwitchDecks()
+        {
+            int i = RandomNumber.Between(1, 3);
+            if (i == 1)
+            {
+                if      (CurrentDeck.Id == 2) { Deck2 = CurrentDeck; }
+                else if (CurrentDeck.Id == 3) { Deck3 = CurrentDeck; }
+                CurrentDeck = Deck1;
+            }
+            else if (i == 2)
+            {
+                if      (CurrentDeck.Id == 1) { Deck1 = CurrentDeck; }
+                else if (CurrentDeck.Id == 3) { Deck3 = CurrentDeck; }
+                CurrentDeck = Deck2;
+
+            }
+            else if (i == 3)
+            {
+                if      (CurrentDeck.Id == 1) { Deck1 = CurrentDeck; }
+                else if (CurrentDeck.Id == 2) { Deck2 = CurrentDeck; }
+                CurrentDeck = Deck3;
+            }
+        }
+
+        // zobrazí skóre
         private void UpdateScore()
         {
             label3.Text = "Výhry:"  + Convert.ToString(Win);
@@ -48,6 +84,7 @@ namespace blackjack
             UpdateScore();
         }
 
+        // zobrazí/skryje tlačítka
         private void ShowButton()
         {
             button1.Visible = false;    // "Rozdat"
@@ -69,7 +106,7 @@ namespace blackjack
                 pb.Visible = false;
         }
 
-        // zobrazí hráčovy karty
+        // zobrazí karty v ruce hráče/krupiéra
         public void DisplayHand(Hand hand)
         {
             string currentcard_picture = null;
@@ -105,6 +142,7 @@ namespace blackjack
                 HandPB.Add(pictureBox23);
                 HandPB.Add(pictureBox24);
             };
+
             int count = 0;
             if (hand.CardsInHand != null && hand != null)
                 // každé kartě určí příslušný název souboru podle její hodnoty a barvy
@@ -157,6 +195,8 @@ namespace blackjack
             PlayerHand.Evaluate();                                          // vyhodnotí hráčovy karty
             richTextBox1.Text = PlayerHand.Result + Environment.NewLine;    // zobrazí hodnotu hráč. karet v richTextBoxu
 
+            DebugDecks();
+
             if (PlayerHand.Score == 21) // pokud má hráč ihned po rozdání 21 (blackjack), ukončí kolo
             {
                 EndGame(PlayerHand, DealerHand);
@@ -171,6 +211,8 @@ namespace blackjack
             PlayerHand.Evaluate();                                          // vyhodnotí hráčovy karty
             richTextBox1.Text = PlayerHand.Result + Environment.NewLine;    // zobrazí hodnotu hráč. karet v richTextBoxu
 
+            DebugDecks();
+
             if (PlayerHand.Score >= 21) // pokud je hráč přes 21 nebo má 21 (blackjack), ukončí kolo
             {
                 EndGame(PlayerHand, DealerHand);
@@ -180,6 +222,7 @@ namespace blackjack
         // tlačítko "UKONČIT KOLO"
         private void Button3_Click(object sender, EventArgs e)
         {
+            DebugDecks();
             EndGame(PlayerHand, DealerHand); // ukončí kolo
         }
 
@@ -266,13 +309,38 @@ namespace blackjack
                 "Karty od 2 do 10 mají při počítání stejnou hodnotu, jaká je uvedena na kartě. Karty J, Q, K (spodek, královna a král) mají hodnotu 10. Eso (A) se počítá dle situace za 1 nebo za 11. Barvy karet nemají žádný význam." + Environment.NewLine +
                 "Pokud je hráč „přes“, vždy prohrává, a to i tehdy, pokud je „přes“ i krupiér. Pokud mají hráč i krupiér stejný počet bodů, končí hra nerozhodně a nikdo nevyhrává. Součet 21 je vždy označen jako BLACKJACK a pokud jej dosáhne hráč, automaticky vyhrává." + Environment.NewLine +
                 "Krupiér začíná hrát až hráč ukončí kolo (tlačítko SKONČIT). Narozdíl od hráče je při volbě dalšího postupu výrazně omezen. Pokud je součet jeho karet menší než 17, musí vždy vzít další kartu. Pokud má 17 a víc, nesmí brát další kartu, musí zůstat stát a ukončit tak hru." + Environment.NewLine +
-                "Není možné hrát DOUBLE, SPLIT nebo POJIŠTĚNÍ. Hraje se s jedním balíčkem, ten je vždy po vypotřebování zamíchán.");
+                "Není možné hrát DOUBLE, SPLIT nebo POJIŠTĚNÍ. Hraje se se třemi balíčky.");
         }
 
         // resetuje skóre
         private void Button5_Click(object sender, EventArgs e)
         {
             UpdateScore(0,0,0);
+        }
+
+        // zobrazuje stav balíčků v okně, pouze pro vývoj
+        private void DebugDecks()
+        {
+            richTextBox2.Text = "CD (Deck" + CurrentDeck.Id + "):" + Environment.NewLine;
+            foreach (Card card in CurrentDeck.Cards)
+            {
+                richTextBox2.Text += card.Value + "." + card.Suit[0] + " ";
+            }
+            richTextBox2.Text += Environment.NewLine + Environment.NewLine + "D1: " + Environment.NewLine;
+            foreach (Card card in Deck1.Cards)
+            {
+                richTextBox2.Text += card.Value + "." + card.Suit[0] + " ";
+            }
+            richTextBox2.Text += Environment.NewLine + Environment.NewLine + "D2: " + Environment.NewLine;
+            foreach (Card card in Deck2.Cards)
+            {
+                richTextBox2.Text += card.Value + "." + card.Suit[0] + " ";
+            }
+            richTextBox2.Text += Environment.NewLine + Environment.NewLine + "D3: " + Environment.NewLine;
+            foreach (Card card in Deck3.Cards)
+            {
+                richTextBox2.Text += card.Value + "." + card.Suit[0] + " ";
+            }
         }
     }
 }

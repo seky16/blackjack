@@ -29,7 +29,7 @@ namespace blackjack
             // ze zadaných max a min spočítá rozsah, připočítá 1 pro zaokrouhlování
             int range = max - min + 1;
 
-            // zaokrouhlí dolů
+            // rozsah vynásobí koeficientem, zaokrouhlí dolů
             double randomValue = Math.Floor(multiplier * range);
 
             return (int)(min + randomValue);

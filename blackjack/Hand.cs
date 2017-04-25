@@ -77,7 +77,18 @@ namespace blackjack
                 while (!CheckDeck(currentdeck)) { form.SwitchDecks(); };
                 currentdeck = form.CurrentDeck;
                 pickedcard = RandomNumber.Between(0, currentdeck.Cards.Count - 1);
-                currentcard = currentdeck.Cards.ElementAt(pickedcard);
+
+                try
+                {
+                    currentcard = currentdeck.Cards.ElementAt(pickedcard);
+                }
+                catch
+                {
+                    while (!CheckDeck(currentdeck)) { form.SwitchDecks(); };
+                    currentdeck = form.CurrentDeck;
+                    pickedcard = RandomNumber.Between(0, currentdeck.Cards.Count - 1);
+                    currentcard = currentdeck.Cards.ElementAt(pickedcard);
+                }
             }
             Card tobereplaced = new Card();
 
